@@ -1,0 +1,79 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/suraback2"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.quran.labs.androidquran.LoginActivity">
+
+  <!-- Login progress -->
+  <TextView
+      android:id="@+id/textView11"
+      android:layout_width="150dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="120dp"
+      android:text="تسجيل الدخول"
+      android:textAlignment="center"
+      android:textSize="18sp"
+      android:textStyle="bold" />
+
+  <TextView
+      android:id="@+id/textView12"
+      android:layout_width="150dp"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="50dp"
+      android:lineSpacingExtra="8sp"
+      android:text="يلزم تسجيل الدخول  حتى يتسنى لنا حفظ معلوماتك ومتابعة حفظك"
+      android:textAlignment="center"
+      android:textColor="@color/Brown"
+      android:textDirection="anyRtl"
+      android:textSize="20sp"
+      android:textStyle="bold" />
+
+  <ProgressBar
+      android:id="@+id/login_progress"
+      style="?android:attr/progressBarStyleLarge"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="8dp"
+      android:visibility="gone" />
+
+  <LinearLayout
+      android:id="@+id/email_login_form"
+      android:layout_width="300dp"
+      android:layout_height="150dp"
+      android:layout_marginTop="100dp"
+      android:orientation="vertical"
+      android:weightSum="1">
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="اسم المستخدم"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="كلمة المرور"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/signin"
+        style="?android:textAppearanceSmall"
+        android:layout_width="196dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/next"
+        android:text="تسجيل الدخول"
+        android:textStyle="bold" />
+
+  </LinearLayout>
+
+</LinearLayout>

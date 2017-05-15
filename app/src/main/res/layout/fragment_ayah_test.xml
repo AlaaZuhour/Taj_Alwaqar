@@ -1,0 +1,150 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/test_back"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="com.quran.labs.androidquran.ui.fragment.AyahOrderFragment"
+    android:weightSum="1">
+
+  <!-- TODO: Update blank fragment layout -->
+  <LinearLayout
+      android:id="@+id/time_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/Brown"
+      android:orientation="horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.21"
+        android:text="النتيجة:"
+        android:textColor="@android:color/white"
+        android:textDirection="anyRtl" />
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        android:textDirection="anyRtl" />
+
+    <Space
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.33"
+        android:text="الوقت:"
+        android:textColor="@android:color/white"
+        android:textDirection="anyRtl" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.21"
+        android:textDirection="anyRtl" />
+  </LinearLayout>
+
+  <ImageView
+      android:id="@+id/imageView"
+      android:layout_width="125dp"
+      android:layout_height="53dp"
+      android:layout_marginTop="68dp"
+      android:src="@drawable/basmala" />
+
+  <TextView
+      android:id="@+id/ayah"
+      android:layout_width="225dp"
+      android:layout_height="60dp"
+      android:layout_marginBottom="70dp"
+      android:layout_marginLeft="5dp"
+      android:layout_marginRight="5dp"
+      android:layout_marginTop="15dp"
+      android:textColor="@color/title_color"
+      android:textDirection="anyRtl"
+      android:textStyle="bold" />
+
+  <GridView
+      android:id="@+id/ayah_listview"
+      android:layout_width="250dp"
+      android:layout_height="130dp"
+      android:layout_marginTop="5dp"
+      android:layout_weight="0.19"
+      android:columnWidth="55dp"
+      android:horizontalSpacing="10dp"
+      android:numColumns="auto_fit"
+      android:padding="3dp"
+      android:textDirection="anyRtl"
+      android:verticalSpacing="10dp" />
+
+  <LinearLayout
+      android:id="@+id/next_layout"
+      android:layout_width="202dp"
+      android:layout_height="51dp"
+      android:layout_marginRight="120dp"
+      android:layout_marginTop="135dp"
+      android:orientation="horizontal"
+      android:visibility="gone">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="124dp"
+        android:layout_height="39dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/next"
+        android:onClick="onNextClick"
+        android:text="التالية "
+        android:textDirection="anyRtl"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+  </LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/button_layout"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="left"
+      android:layout_marginTop="100dp"
+      android:orientation="horizontal">
+
+    <ImageButton
+        android:id="@+id/reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="9dp"
+        android:layout_marginRight="9dp"
+        android:background="@android:color/transparent"
+        android:paddingTop="2dp"
+        android:src="@drawable/reset" />
+
+    <Space
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <ImageButton
+        android:id="@+id/change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:src="@drawable/question" />
+  </LinearLayout>
+</LinearLayout>
