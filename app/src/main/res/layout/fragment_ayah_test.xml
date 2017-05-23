@@ -76,6 +76,8 @@
       android:layout_marginLeft="5dp"
       android:layout_marginRight="5dp"
       android:layout_marginTop="15dp"
+      android:maxLines="10"
+      android:scrollbars="vertical"
       android:textColor="@color/title_color"
       android:textDirection="anyRtl"
       android:textStyle="bold" />
@@ -83,10 +85,10 @@
   <GridView
       android:id="@+id/ayah_listview"
       android:layout_width="250dp"
-      android:layout_height="130dp"
+      android:layout_height="150dp"
       android:layout_marginTop="5dp"
       android:layout_weight="0.19"
-      android:columnWidth="55dp"
+      android:columnWidth="60dp"
       android:horizontalSpacing="10dp"
       android:numColumns="auto_fit"
       android:padding="3dp"

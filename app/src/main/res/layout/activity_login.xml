@@ -2,10 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/suraback2"
+    android:background="@drawable/suraback"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.quran.labs.androidquran.LoginActivity">
+    tools:context="com.quran.labs.androidquran.LoginActivity"
+    android:weightSum="1">
 
   <!-- Login progress -->
   <TextView
@@ -41,9 +42,10 @@
 
   <LinearLayout
       android:id="@+id/email_login_form"
-      android:layout_width="300dp"
-      android:layout_height="150dp"
-      android:layout_marginTop="100dp"
+      android:layout_width="306dp"
+      android:layout_height="300dp"
+      android:layout_marginTop="40dp"
+      android:layout_weight="0.28"
       android:orientation="vertical"
       android:weightSum="1">
 

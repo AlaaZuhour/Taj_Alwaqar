@@ -15,6 +15,7 @@ public class HelpActivity extends QuranActionBarActivity {
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     setContentView(R.layout.help);
+
     TextView helpText = (TextView) findViewById(R.id.txtHelp);
     helpText.setText(Html.fromHtml(getString(R.string.help)));
   }

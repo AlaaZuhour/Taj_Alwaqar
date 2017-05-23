@@ -1138,7 +1138,7 @@ public class AudioService extends Service implements OnCompletionListener,
     if (mNotificationIcon == null) {
       try {
         Resources resources = appContext.getResources();
-        Bitmap logo = BitmapFactory.decodeResource(resources, R.drawable.icon);
+        Bitmap logo = BitmapFactory.decodeResource(resources, R.mipmap.icon);
         int iconWidth = logo.getWidth();
         int iconHeight = logo.getHeight();
         ColorDrawable cd = new ColorDrawable(ContextCompat.getColor(appContext,

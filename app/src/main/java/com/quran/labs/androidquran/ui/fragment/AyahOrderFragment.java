@@ -7,10 +7,12 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -98,7 +100,16 @@ public class AyahOrderFragment extends Fragment implements TestFragment , Dialog
     else {
       isAyahTest=false;
       Intent i = getActivity().getIntent();
-      suraID = i.getExtras().getInt("sura");
+      SharedPreferences sharedPref;
+      sharedPref =getActivity().getPreferences(Context.MODE_PRIVATE);
+      SharedPreferences.Editor editor = sharedPref.edit();
+      if(i.getExtras()!=null) {
+        suraID = i.getExtras().getInt("sura");
+        editor.putInt("sura",suraID);
+
+      }
+      else
+        suraID=sharedPref.getInt("sura",1);
 
 
     }
@@ -193,6 +204,7 @@ public class AyahOrderFragment extends Fragment implements TestFragment , Dialog
           //v.setVisibility(View.GONE);
           view = (TextView) rootView.findViewById(R.id.ayah);
           view.setText(ayha);
+          view.setMovementMethod(new ScrollingMovementMethod());
         }
         else
           Toast.makeText(getActivity(), "جواب خاطئ، حاول مرة أخرى" , Toast.LENGTH_SHORT).show();

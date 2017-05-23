@@ -23,6 +23,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.util.ArraySet;
 import android.support.v4.util.Pair;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewCompat;
@@ -33,6 +34,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
@@ -57,6 +59,7 @@ import com.quran.labs.androidquran.data.Constants;
 import com.quran.labs.androidquran.data.QuranDataProvider;
 import com.quran.labs.androidquran.data.QuranInfo;
 import com.quran.labs.androidquran.data.SuraAyah;
+import com.quran.labs.androidquran.data.VerseRange;
 import com.quran.labs.androidquran.database.TranslationsDBAdapter;
 import com.quran.labs.androidquran.model.bookmark.BookmarkModel;
 import com.quran.labs.androidquran.model.translation.ArabicDatabaseUtils;
@@ -103,6 +106,7 @@ import com.quran.labs.androidquran.widgets.SlidingUpPanelLayout;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -129,7 +133,8 @@ public class PagerActivity extends QuranActionBarActivity implements
     AudioStatusBar.AudioBarListener,
     DefaultDownloadReceiver.DownloadListener,
     TagBookmarkDialog.OnBookmarkTagsUpdateListener,
-    AyahSelectedListener {
+    AyahSelectedListener,
+    AyahOrderFragment.OnOrderFragmentListener {
   private static final String AUDIO_DOWNLOAD_KEY = "AUDIO_DOWNLOAD_KEY";
   private static final String LAST_AUDIO_DL_REQUEST = "LAST_AUDIO_DL_REQUEST";
   private static final String LAST_READ_PAGE = "LAST_READ_PAGE";
@@ -208,6 +213,21 @@ public class PagerActivity extends QuranActionBarActivity implements
   private CompositeDisposable compositeDisposable;
 
   private final PagerHandler handler = new PagerHandler(this);
+
+  @Override
+  public void onOrderEnd() {
+
+  }
+
+  @Override
+  public void onChangeClick(View v) {
+
+  }
+
+  @Override
+  public void onResetClick(View v) {
+
+  }
 
   private static class PagerHandler extends Handler {
     private final WeakReference<PagerActivity> activity;
@@ -470,6 +490,50 @@ public class PagerActivity extends QuranActionBarActivity implements
         downloadReceiver,
         new IntentFilter(action));
     downloadReceiver.setListener(this);
+  }
+
+
+  public void checkCounters(HashMap<Integer, Integer> counters, VerseRange verseRange, int page) {
+
+    if(verseRange.startSura == verseRange.endingSura) {
+      int verseInRange = verseRange.versesInRange;
+      Set<String> badAyahsKeyes = new ArraySet<>();
+      Set<String> goodAyahsKeyes = new ArraySet<>();
+      Set<String> excelentAyahsKeyes = new ArraySet<>();
+
+        for(int i = 0; i< verseInRange; i++) {
+          int ayah = verseRange.startAyah + i;
+          SuraAyah suraAyah = new SuraAyah(verseRange.startSura, ayah);
+          int id = QuranInfo.getAyahId(verseRange.startSura, ayah);
+          int counter = counters.get(id);
+
+          if (counter < 10) {
+            badAyahsKeyes.add(verseRange.startSura + ":" + ayah);
+          } else if (counter >= 10 && counter < 20) {
+            goodAyahsKeyes.add(verseRange.startSura + ":" + ayah);
+          } else {
+            excelentAyahsKeyes.add(verseRange.startSura + ":" + ayah);
+          }
+        }
+
+        Log.d("bad", badAyahsKeyes.size() + "");
+      Log.d("good", goodAyahsKeyes.size() + "");
+      Log.d("excelent", excelentAyahsKeyes.size() + "");
+      /*SuraAyah startSuraAyah = new SuraAyah(verseRange.startSura, verseRange.startAyah);
+      SuraAyah endSuraAyah = new SuraAyah(verseRange.endingSura, verseRange.endingAyah);*/
+      QuranPage fragment = pagerAdapter.getFragmentIfExistsForPage(page);
+      if (fragment != null) {
+        //Set<String> ayahKeys = QuranInfo.getAyahKeysOnPage(page, startSuraAyah, endSuraAyah);
+        Log.d("dd", "fragment != null");
+        if(badAyahsKeyes.size() != 0)
+        fragment.getAyahTracker().highlightAyat(page, badAyahsKeyes, HighlightType.PROGBAD);
+        if(goodAyahsKeyes.size()!=0)
+        fragment.getAyahTracker().highlightAyat(page, goodAyahsKeyes, HighlightType.PROGGOOD);
+        if(excelentAyahsKeyes.size() != 0)
+        fragment.getAyahTracker().highlightAyat(page, excelentAyahsKeyes, HighlightType.PROGEXCELENT);
+      }
+    }
+
   }
 
   public Observable<Integer> getViewPagerObservable() {
@@ -2002,13 +2066,8 @@ public class PagerActivity extends QuranActionBarActivity implements
         case R.id.cab_play_from_here:
           sliderPage = slidingPagerAdapter.getPagePosition(AUDIO_PAGE);
           break;
-        case R.id.cab_share_ayah_link:
-          shareAyahLink(start, end);
-          break;
-        case R.id.cab_share_ayah_text:
-          shareAyah(start, end, false);
-          break;
-        case R.id.cab_copy_ayah:
+
+        case R.id.cab_share_ayah:
           AyahOrderFragment test =new AyahOrderFragment();
           android.app.FragmentManager fragmentmanager;
           FragmentTransaction fragmentTransaction ;

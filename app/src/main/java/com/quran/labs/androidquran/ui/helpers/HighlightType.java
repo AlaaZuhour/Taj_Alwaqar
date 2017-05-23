@@ -11,6 +11,9 @@ public class HighlightType implements Comparable<HighlightType> {
   public static final HighlightType AUDIO =     new HighlightType(2, false, R.color.audio_highlight);
   public static final HighlightType NOTE =      new HighlightType(3, true,  R.color.note_highlight);
   public static final HighlightType BOOKMARK =  new HighlightType(4, true,  R.color.bookmark_highlight);
+  public static final HighlightType PROGBAD =  new HighlightType(5, true,  R.color.prog_bad);
+  public static final HighlightType PROGGOOD =  new HighlightType(6, true,  R.color.prog_good);
+  public static final HighlightType PROGEXCELENT =  new HighlightType(7, true,  R.color.prog_excelanet);
 
   private Long mId;
   private boolean mMultipleHighlightsAllowed;

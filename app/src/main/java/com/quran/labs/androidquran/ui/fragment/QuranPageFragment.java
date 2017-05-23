@@ -6,15 +6,21 @@ import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.quran.labs.androidquran.LoginActivity;
 import com.quran.labs.androidquran.common.AyahBounds;
 import com.quran.labs.androidquran.dao.Bookmark;
+import com.quran.labs.androidquran.data.Constants;
+import com.quran.labs.androidquran.data.QuranInfo;
+import com.quran.labs.androidquran.data.VerseRange;
 import com.quran.labs.androidquran.module.fragment.QuranPageModule;
 import com.quran.labs.androidquran.presenter.quran.QuranPagePresenter;
 import com.quran.labs.androidquran.presenter.quran.QuranPageScreen;
@@ -84,7 +90,13 @@ public class QuranPageFragment extends Fragment implements PageController,
     quranPageLayout = new QuranImagePageLayout(context);
     quranPageLayout.setPageController(this, pageNumber);
     imageView = quranPageLayout.getImageView();
+
     return quranPageLayout;
+  }
+
+  @Override
+  public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
   }
 
   @Override
@@ -94,9 +106,20 @@ public class QuranPageFragment extends Fragment implements PageController,
       if (!quranSettings.highlightBookmarks()) {
         imageView.unHighlight(HighlightType.BOOKMARK);
       }
+
+      VerseRange verseRange = QuranInfo.getVerseRangeForPage(pageNumber);
+
+
+      if(LoginActivity.CORRPASS){
+
+        if (((PagerActivity) getActivity()) !=null)
+          ((PagerActivity) getActivity()).checkCounters(Constants.counters, verseRange, pageNumber);
+      }
       quranPagePresenter.refresh();
     }
+
   }
+
 
   @Override
   public AyahTracker getAyahTracker() {

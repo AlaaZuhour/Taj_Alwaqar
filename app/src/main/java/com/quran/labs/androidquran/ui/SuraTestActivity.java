@@ -9,6 +9,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -30,23 +31,27 @@ public class SuraTestActivity extends Activity implements AyahEndFragment.OnEndF
                   AyahOrderFragment.OnOrderFragmentListener, AyahNextFragment.OnNextFragmentListener,DialogPop.PopupDialog {
   int ayah,sura;
   CountDownTimer countDownTimer;
-  TestFragment fm;
+  com.quran.labs.androidquran.ui.TestFragment fm;
   boolean count=true;
   public long mil=30000;
   DialogPop p;
+  SharedPreferences sharedPref;
   public int fragmentCount = 0, questionCount = 0,score=0, len=0;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_sura_test);
+    sharedPref =this.getPreferences(Context.MODE_PRIVATE);
+    SharedPreferences.Editor editor = sharedPref.edit();
     fragmentCount = 0; questionCount = 0; score=0; len=0;
-    if(savedInstanceState!=null)
-      sura=savedInstanceState.getInt("sura");
-    else
-      if(getIntent().getExtras()!=null)
-    sura=getIntent().getExtras().getInt("sura");
+      if(getIntent().getExtras()!=null) {
+        sura = getIntent().getExtras().getInt("sura");
+        editor.putInt("sura",sura);
+      }
+      else
+        sura=sharedPref.getInt("sura",1);
 
-  }
+      }
   @Override
   public void onSaveInstanceState(Bundle onState){
    onState.putInt("sura",sura);
@@ -185,6 +190,7 @@ public class SuraTestActivity extends Activity implements AyahEndFragment.OnEndF
   @Override
   public void onResetClick(View v) {
     Intent i =new Intent(SuraTestActivity.this,SuraTestActivity.class);
+    i.putExtra("sura",sura);
     startActivity(i);
   }
 

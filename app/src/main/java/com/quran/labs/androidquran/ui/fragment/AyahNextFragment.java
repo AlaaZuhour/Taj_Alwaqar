@@ -2,11 +2,13 @@ package com.quran.labs.androidquran.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +41,7 @@ public class AyahNextFragment extends Fragment implements TestFragment{
   DatabaseHandler dbHandler;
   public int rID;
   TextView tim;
+  RadioGroup radioGroup;
   public AyahNextFragment() {
     // Required empty public constructor
   }
@@ -66,7 +69,16 @@ public class AyahNextFragment extends Fragment implements TestFragment{
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     Intent i =getActivity().getIntent();
-    suraID=i.getExtras().getInt("sura");
+    SharedPreferences sharedPref;
+    sharedPref =getActivity().getPreferences(Context.MODE_PRIVATE);
+    SharedPreferences.Editor editor = sharedPref.edit();
+    if(i.getExtras()!=null) {
+      suraID = i.getExtras().getInt("sura");
+      editor.putInt("sura",suraID);
+
+    }
+    else
+      suraID=sharedPref.getInt("sura",1);
     Log.d("on create",suraID+"");
   }
 
@@ -81,6 +93,8 @@ public class AyahNextFragment extends Fragment implements TestFragment{
   }
   @Override
   public void viewQuestion(int suraID, int ayah) {
+//    if(radioGroup != null)
+//      radioGroup.clearCheck();
     int ayat= QuranInfo.getNumAyahs(suraID);
     Log.d("ayahNumber",ayat+"");
     Log.d("surahhhh",suraID+"");
@@ -104,6 +118,7 @@ public class AyahNextFragment extends Fragment implements TestFragment{
     ArrayList<RadioButton> rad=new ArrayList<>();
     TextView queation=(TextView) rootView.findViewById(R.id.ayah);
     queation.setText(ayahTextQ);
+    queation.setMovementMethod(new ScrollingMovementMethod());
     RadioButton radio1 = (RadioButton) rootView.findViewById(R.id.radioButton1);
     RadioButton radio2 = (RadioButton) rootView.findViewById(R.id.radioButton2);
     RadioButton radio3 = (RadioButton) rootView.findViewById(R.id.radioButton3);
@@ -119,7 +134,7 @@ public class AyahNextFragment extends Fragment implements TestFragment{
     for(int i=0;i<rad.size();i++){
           rad.get(i).setText(option.get(i));
     }
-    RadioGroup radioGroup = (RadioGroup) rootView.findViewById(R.id.radio_group);
+    radioGroup = (RadioGroup) rootView.findViewById(R.id.radio_group);
 
     radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
     {

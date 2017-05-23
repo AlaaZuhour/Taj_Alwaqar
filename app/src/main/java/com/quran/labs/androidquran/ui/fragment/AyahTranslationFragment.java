@@ -28,11 +28,8 @@ import com.quran.labs.androidquran.database.EnglishTextDBHelper;
 import com.quran.labs.androidquran.database.SimilarityDBHelper;
 import com.quran.labs.androidquran.database.TranslationsDBAdapter;
 import com.quran.labs.androidquran.model.translation.ArabicDatabaseUtils;
-import com.quran.labs.androidquran.presenter.quran.ayahtracker.AyahTrackerPresenter;
 import com.quran.labs.androidquran.presenter.translation.InlineTranslationPresenter;
 import com.quran.labs.androidquran.ui.PagerActivity;
-import com.quran.labs.androidquran.ui.helpers.AyahTracker;
-import com.quran.labs.androidquran.ui.helpers.QuranPage;
 import com.quran.labs.androidquran.util.QuranSettings;
 import com.quran.labs.androidquran.widgets.InlineTranslationView;
 
@@ -56,13 +53,12 @@ public class AyahTranslationFragment extends AyahActionFragment {
   String currAyahText;
   SuraAyah start;
   PagerActivity activity;
-  AyahTrackerPresenter ayahTrackerPresenter;
   @Inject TranslationsDBAdapter translationsDBAdapter;
   @Inject ArabicDatabaseUtils arabicDatabaseUtils;
   @Inject QuranSettings quranSettings;
-
+  @Inject InlineTranslationPresenter translationPresenter;
   DatabaseHandler dbHandler;
-  View view=null;
+   View view=null;
   @Override
   public void onAttach(Context context) {
     super.onAttach(context);
@@ -171,15 +167,15 @@ public class AyahTranslationFragment extends AyahActionFragment {
           @Override
           public View getView(int position, View convertView, ViewGroup parent) {
             String currentSim="";
-            if(position<similarityWithRate.size())
-              currentSim=similarityWithRate.get(position);
+           if(position<similarityWithRate.size())
+             currentSim=similarityWithRate.get(position);
             if(convertView == null)
               convertView = getActivity().getLayoutInflater().inflate(R.layout.exp_header, null, false);
             TextView ye=(TextView) convertView.findViewById(R.id.item);
             ye.setText(currentSim);
             TextView yee=(TextView) convertView.findViewById(R.id.sub_item);
-            if(position<item_data.size())
-              yee.setText(item_data.get(position));
+           if(position<item_data.size())
+            yee.setText(item_data.get(position));
 
             return convertView;
           }
@@ -312,20 +308,20 @@ public class AyahTranslationFragment extends AyahActionFragment {
     super.onPause();
   }
 
-
   private View.OnClickListener onClickListener = v -> {
-
+    final Activity activity = getActivity();
+    if (activity instanceof PagerActivity) {
+      final PagerActivity pagerActivity = (PagerActivity) activity;
 
       switch (v.getId()) {
         case R.id.next_ayah:
-          activity.nextAyah();
-          refreshView();
+          pagerActivity.nextAyah();
           break;
         case R.id.previous_ayah:
-          activity.previousAyah();
+          pagerActivity.previousAyah();
           break;
       }
-
+    }
   };
 
   public void refreshView() {
@@ -349,6 +345,5 @@ public class AyahTranslationFragment extends AyahActionFragment {
     }
     updateListView();
   }
-
 
 }

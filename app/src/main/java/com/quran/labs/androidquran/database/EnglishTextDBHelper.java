@@ -8,6 +8,8 @@ import android.os.AsyncTask;
 import android.text.Html;
 import android.util.Log;
 
+import com.quran.labs.androidquran.data.Constants;
+import com.quran.labs.androidquran.data.SuraAyah;
 import com.quran.labs.androidquran.ui.fragment.AyahTranslationFragment;
 
 import junit.runner.Version;
@@ -131,7 +133,7 @@ public class EnglishTextDBHelper extends SQLiteOpenHelper {
 
       @Override
       protected void onPostExecute(String result){
-        myJSON=result;
+          myJSON=result;
         try {
           JSONObject jobjQuran = new JSONObject(myJSON);
           Log.d("fdfd", "hi i'm in onPostExecute");
@@ -171,5 +173,27 @@ public class EnglishTextDBHelper extends SQLiteOpenHelper {
     }
     temp.close();
     return text;
+  }
+
+  public void ayahSuraId(int id){
+    Log.d("dd", "I'm here");
+    String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE "+ ID + "=" + id;
+    SQLiteDatabase db = this.getReadableDatabase();
+    Cursor temp = db.rawQuery(selectQuery, null);
+    if(temp.moveToNext()){
+      do{
+
+        int idAyahIndex = temp.getColumnIndex(VERSEID);
+        int idAyah = temp.getInt(idAyahIndex);
+        int idSuraIndex = temp.getColumnIndex(SURAID);
+        int idSura = temp.getInt(idSuraIndex);
+
+        SuraAyah suraAyah = new SuraAyah(idSura, idAyah);
+
+        Constants.suraAyahHashMap.put(id, suraAyah);
+      } while(temp.moveToNext());
+    }
+    temp.close();
+
   }
 }

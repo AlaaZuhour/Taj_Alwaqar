@@ -88,6 +88,8 @@
       android:layout_height="55dp"
       android:layout_marginTop="100dp"
       android:layout_weight="0.00"
+      android:maxLines="10"
+      android:scrollbars="vertical"
       android:textStyle="bold" />
 
   <LinearLayout

@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 import io.reactivex.Observable;
 import io.reactivex.subjects.UnicastSubject;
 
-import com.quran.labs.androidquran.R;
+//import com.quran.labs.androidquran.R;
 
 public class TranslationsAdapter extends RecyclerView.Adapter<TranslationsAdapter.TranslationViewHolder> {
 

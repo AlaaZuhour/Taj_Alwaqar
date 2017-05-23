@@ -25,6 +25,7 @@ import android.view.MenuItem;
 
 import com.quran.labs.androidquran.AboutUsActivity;
 import com.quran.labs.androidquran.HelpActivity;
+import com.quran.labs.androidquran.LoginActivity;
 import com.quran.labs.androidquran.QuranApplication;
 import com.quran.labs.androidquran.QuranPreferenceActivity;
 import com.quran.labs.androidquran.R;
@@ -199,8 +200,9 @@ public class QuranActivity extends QuranActionBarActivity
         startActivity(i);
         return true;
       }
-      case R.id.search: {
-
+      case R.id.login: {
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
         return true;
       }
       case R.id.last_page: {
@@ -405,7 +407,7 @@ public class QuranActivity extends QuranActionBarActivity
 
       switch (pos) {
         case QuranActivity.SURA_LIST:
-          return  SuraListFragment.newInstance();
+          return SuraListFragment.newInstance();
         case QuranActivity.JUZ2_LIST:
           return JuzListFragment.newInstance();
         case QuranActivity.BOOKMARKS_LIST:

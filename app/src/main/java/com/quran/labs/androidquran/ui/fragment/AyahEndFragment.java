@@ -2,11 +2,13 @@ package com.quran.labs.androidquran.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.CountDownTimer;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,7 +66,7 @@ public class AyahEndFragment extends Fragment implements TestFragment {
       }
     });
     ImageButton reset =(ImageButton) getActivity().findViewById(R.id.reset);
-    CountDownTimer c=new CountDownTimer(6000,1000) {
+    CountDownTimer c=new CountDownTimer(4000,1000) {
       @Override
       public void onTick(long millisUntilFinished) {
       }
@@ -100,18 +102,33 @@ public class AyahEndFragment extends Fragment implements TestFragment {
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     ends=new ArrayList<>();
+    ends.add(new Integer[2]);
     Integer[] sra1=new Integer[]{54,115,127,128,129,137,143,158,182,199,209,218,224,225,240,244,261,263,267,160};
     ends.add(sra1);
     Integer[] sra2=new Integer[]{6,18,35,62,73,126,129,155,121,89,31,34};
     ends.add(sra2);
+    Integer[] sra3=new Integer[]{16,17,24,26,35,56,58,64,96,99,100,104,110,111,129,130,131,134,147,148,149,152,170};
+    ends.add(sra3);
+    Integer[] sra4=new Integer[]{34,38,39,76,101,118,98,74};
+    ends.add(sra4);
+    Integer[] sra5=new Integer[]{13,18,54,83,96,103,115,128,139,145,165};
+    ends.add(sra5);
     ayahEnds1=new String[]{"الرحمن الرحيم","العليم القدير","التواب الرحيم"," العزيز الحميد","الواحد القهار","الغفور الودود",
         "العزيز الحكيم","العزيز العليم","الغفور الرحيم","العليم الحكيم","الحكيم الخبير","السميع العليم","الغني الحميد",
         "العليم الخبير","الفتاح العليم","الخلاق العليم","الرحيم الغفور","الكبير المتعال","العزيز الرحيم","العلي العظيم"};
     ayahEnds2=new String[]{"غني حليم","غفورا شكورا","واسع حكيم","واسع عليم","عفوا قديرا","رؤوف رحيم","قوي عزيز","عفوا غفورا",
         "غفورا حليم","سميع عليم","غفور رحيم","عزيز حكيم","عليم حليم"};
     Intent i =getActivity().getIntent();
-    suraID=i.getExtras().getInt("sura");
-    //viewQuestion(suraID,ayah);
+    SharedPreferences sharedPref;
+    sharedPref =getActivity().getPreferences(Context.MODE_PRIVATE);
+    SharedPreferences.Editor editor = sharedPref.edit();
+    if(i.getExtras()!=null) {
+      suraID = i.getExtras().getInt("sura");
+      editor.putInt("sura",suraID);
+
+    }
+    else
+      suraID=sharedPref.getInt("sura",1);
   }
 
   @Override
@@ -124,10 +141,16 @@ public class AyahEndFragment extends Fragment implements TestFragment {
   }
   @Override
   public void viewQuestion(int suraID, int ayah) {
-    Integer[] current=ends.get(0);
-    int ran=(int) Math.floor(Math.random()*current.length);
-    ayah= current[ran];
+   try {
+     Integer[] current = ends.get(suraID);
+     int ran = (int) Math.floor(Math.random() * current.length);
+     ayah = current[ran];
+   }
+   catch (Exception e){
+
+   }
     String ayahText=handelVerses(suraID,ayah);
+    Log.d("ayahText",ayahText);
     String sb="";
     String sb1="";
     String[] word=ayahText.split(" ");
@@ -138,10 +161,11 @@ public class AyahEndFragment extends Fragment implements TestFragment {
         sb1+=word[i]+" ";
     }
     String endTrue=sb1;
+    Log.d("endText",endTrue);
     ArrayList<TextView> option=new ArrayList<>();
     TextView ayahQuestion=(TextView) rootView.findViewById(R.id.textView10);
     ayahQuestion.setText(sb);
-
+    ayahQuestion.setMovementMethod(new ScrollingMovementMethod());
     TextView option1=(TextView) rootView.findViewById(R.id.textView6);
     TextView option2=(TextView) rootView.findViewById(R.id.textView7);
     TextView option3=(TextView) rootView.findViewById(R.id.textView8);

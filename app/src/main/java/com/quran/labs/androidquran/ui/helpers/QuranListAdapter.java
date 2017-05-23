@@ -3,7 +3,6 @@ package com.quran.labs.androidquran.ui.helpers;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -221,7 +220,6 @@ public class QuranListAdapter extends
     if (touchListener != null) {
       final int position = recyclerView.getChildAdapterPosition(v);
       if (position != RecyclerView.NO_POSITION) {
-         Log.d("viewwwwww",position+"");
         return touchListener.onLongClick(elements[position], position);
       }
     }

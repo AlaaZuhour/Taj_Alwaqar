@@ -1,5 +1,7 @@
 package com.quran.labs.androidquran.data;
 
+import java.util.HashMap;
+
 public class Constants {
 
   // data domain
@@ -75,4 +77,8 @@ public class Constants {
       "didPresentStoragePermissionDialog";
   public static final String PREF_WAS_SHOWING_TRANSLATION = "wasShowingTranslation";
   public static final String PREF_QURAN_SETTINGS = "quranSettings";
+
+  public static HashMap<Integer, Integer> counters = new HashMap<>();
+
+  public static HashMap<Integer, SuraAyah> suraAyahHashMap = new HashMap<>();
 }
