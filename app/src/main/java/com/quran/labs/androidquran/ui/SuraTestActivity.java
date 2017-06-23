@@ -52,12 +52,6 @@ public class SuraTestActivity extends Activity implements AyahEndFragment.OnEndF
         sura=sharedPref.getInt("sura",1);
 
       }
-  @Override
-  public void onSaveInstanceState(Bundle onState){
-   onState.putInt("sura",sura);
-    fragmentCount = 0; questionCount = 0; score=0; len=0;
-    super.onSaveInstanceState(onState);
-  }
   private void createCountDownTimer(long mill) {
     countDownTimer = new CountDownTimer(mill, 1000) {
       public void onTick(long millisUntilFinished) {

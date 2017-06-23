@@ -2055,7 +2055,19 @@ public class PagerActivity extends QuranActionBarActivity implements
 
       switch (item.getItemId()) {
         case R.id.cab_bookmark_ayah:
-          toggleBookmark(start.sura, start.ayah, start.getPage());
+          if(LoginActivity.CORRPASS) {
+            int idAyah = QuranInfo.getAyahId(start.sura, start.ayah);
+            Log.d("before", Constants.counters.get(idAyah) + "");
+            Constants.counters.put(idAyah, Constants.counters.get(idAyah) + 1);
+            Log.d("after", Constants.counters.get(idAyah) + "");
+            int page = QuranInfo.getPageFromSuraAyah(start.sura, start.ayah);
+            VerseRange verseRange = QuranInfo.getVerseRangeForPage(page);
+            checkCounters(Constants.counters, verseRange, page);
+            QuranPage fragment = pagerAdapter.getFragmentIfExistsForPage(page);
+            if (fragment != null) {
+              fragment.updateView();
+            }
+          }
           break;
         case R.id.cab_tag_ayah:
           sliderPage = slidingPagerAdapter.getPagePosition(TAG_PAGE);

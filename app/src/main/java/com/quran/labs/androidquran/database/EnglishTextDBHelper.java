@@ -176,7 +176,7 @@ public class EnglishTextDBHelper extends SQLiteOpenHelper {
   }
 
   public void ayahSuraId(int id){
-    Log.d("dd", "I'm here");
+   // Log.d("dd", "I'm here");
     String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE "+ ID + "=" + id;
     SQLiteDatabase db = this.getReadableDatabase();
     Cursor temp = db.rawQuery(selectQuery, null);

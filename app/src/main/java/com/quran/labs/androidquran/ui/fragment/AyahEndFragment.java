@@ -102,7 +102,8 @@ public class AyahEndFragment extends Fragment implements TestFragment {
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     ends=new ArrayList<>();
-    ends.add(new Integer[2]);
+    ends.add(new Integer[1]);
+    ends.add(new Integer[1]);
     Integer[] sra1=new Integer[]{54,115,127,128,129,137,143,158,182,199,209,218,224,225,240,244,261,263,267,160};
     ends.add(sra1);
     Integer[] sra2=new Integer[]{6,18,35,62,73,126,129,155,121,89,31,34};
